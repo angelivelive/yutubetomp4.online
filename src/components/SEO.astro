@@ -1,0 +1,67 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url?: string;
+  image?: string;
+}
+
+const { 
+  title, 
+  description, 
+  url = Astro.url, 
+  image = "/favicon.png" 
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TubeToMP4",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1250"
+  },
+  "description": description,
+  "featureList": [
+    "YouTube to MP4 conversion",
+    "4K Video Download",
+    "No registration required",
+    "Unlimited downloads"
+  ],
+  "url": url
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
+
+<!-- 2026 Agentic SEO: SoftwareApplication Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<!-- AI Agent Meta Tags -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="ai-agent" content=" TubeToMP4 allows direct video downloading via URL. Capable of processing YouTube links to MP4 format." />

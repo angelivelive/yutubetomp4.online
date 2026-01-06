@@ -65,13 +65,34 @@ const translations: Record<string, Record<string, string>> = {
 
 export default function ConverterWidget({ lang = 'en' }: Props) {
     const [url, setUrl] = useState('');
-    const [status, setStatus] = useState<'idle' | 'processing' | 'success'>('idle');
+    const [status, setStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
     const [progress, setProgress] = useState(0);
+    const [error, setError] = useState('');
 
     const t = translations[lang] || translations.en;
 
+    const isValidYouTubeUrl = (url: string): boolean => {
+        const patterns = [
+            /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/,
+            /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]+/,
+            /^(https?:\/\/)?(www\.)?youtu\.be\/[\w-]+/,
+        ];
+        return patterns.some(pattern => pattern.test(url));
+    };
+
     const handleStart = () => {
-        if (!url) return;
+        if (!url) {
+            setError('Please enter a YouTube URL');
+            return;
+        }
+
+        if (!isValidYouTubeUrl(url)) {
+            setError('Invalid YouTube URL. Please enter a valid YouTube video link.');
+            setStatus('error');
+            return;
+        }
+
+        setError('');
         setStatus('processing');
         setProgress(0);
 
@@ -91,12 +112,13 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
         setStatus('idle');
         setUrl('');
         setProgress(0);
+        setError('');
     };
 
     return (
         <div className="w-full max-w-3xl mx-auto bg-brand-card/80 backdrop-blur-md border border-white/10 rounded-2xl p-2 shadow-2xl shadow-black/50 ring-1 ring-white/5 overflow-hidden relative">
             <div className="relative flex items-center p-2">
-                {status === 'idle' ? (
+                {status === 'idle' || status === 'error' ? (
                     <>
                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white/30">
@@ -106,9 +128,17 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
                         <input
                             type="text"
                             value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                            className="block w-full rounded-xl bg-black/50 border-0 py-4 pl-12 pr-32 text-white placeholder:text-white/30 focus:ring-2 focus:ring-brand-red focus:outline-none sm:text-base sm:leading-6 transition-all duration-300"
+                            onChange={(e) => {
+                                setUrl(e.target.value);
+                                if (error) setError('');
+                                if (status === 'error') setStatus('idle');
+                            }}
+                            className={`block w-full rounded-xl bg-black/50 border-0 py-4 pl-12 pr-32 text-white placeholder:text-white/30 focus:ring-2 ${error ? 'focus:ring-red-500 ring-2 ring-red-500/50' : 'focus:ring-brand-red'} focus:outline-none sm:text-base sm:leading-6 transition-all duration-300`}
                             placeholder={t.placeholder}
+                            aria-label="YouTube Video URL Input"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleStart();
+                            }}
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2">
                             <button
@@ -116,6 +146,7 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
                                 onClick={handleStart}
                                 className="inline-flex items-center gap-x-2 rounded-lg bg-brand-red px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled={!url}
+                                aria-label="Start Conversion"
                             >
                                 {t.start}
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
@@ -146,9 +177,9 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
-                            <button className="px-4 py-2 bg-white/10 rounded-lg text-sm text-white hover:bg-white/20 transition-colors font-medium">{t.downloadMp3}</button>
-                            <button className="px-4 py-2 bg-brand-red rounded-lg text-sm text-white hover:bg-red-600 transition-colors shadow-lg shadow-brand-red/20 font-medium">{t.downloadMp4}</button>
-                            <button onClick={handleReset} className="p-2 text-white/50 hover:text-white">
+                            <button className="px-4 py-2 bg-white/10 rounded-lg text-sm text-white hover:bg-white/20 transition-colors font-medium" aria-label="Download MP3">{t.downloadMp3}</button>
+                            <button className="px-4 py-2 bg-brand-red rounded-lg text-sm text-white hover:bg-red-600 transition-colors shadow-lg shadow-brand-red/20 font-medium" aria-label="Download MP4">{t.downloadMp4}</button>
+                            <button onClick={handleReset} className="p-2 text-white/50 hover:text-white" aria-label="Reset Converter">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                     <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
                                 </svg>
@@ -157,6 +188,16 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
                     </div>
                 )}
             </div>
+            {error && (
+                <div className="px-4 pb-3 pt-1">
+                    <p className="text-red-400 text-sm flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                        </svg>
+                        {error}
+                    </p>
+                </div>
+            )}
         </div>
     );
 }

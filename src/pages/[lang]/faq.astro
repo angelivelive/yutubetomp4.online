@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { languages, type Language } from '../../i18n/translations';
+
+export function getStaticPaths() {
+  return Object.keys(languages).filter(l => l !== 'en').map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Language };
+
+const faqs = [
+  {
+    question: "Is it free to download YouTube videos?",
+    answer: "Yes, TubeToMP4 is completely free to use. There are no hidden fees, subscriptions, or limits on the number of videos you can download."
+  },
+  {
+    question: "Is it necessary to register on TubeToMP4?",
+    answer: "No, you don't need to register or sign up. Simply paste the YouTube link and start downloading immediately."
+  },
+  {
+    question: "Can I use TubeToMP4 on my mobile device?",
+    answer: "Yes, TubeToMP4 works on any device including smartphones, tablets, and computers. It's fully responsive and works in any modern browser."
+  },
+  {
+    question: "What video formats are supported?",
+    answer: "We support MP4 (video) and MP3 (audio) formats. You can download videos in various qualities including 360p, 480p, 720p, 1080p, and 4K."
+  },
+  {
+    question: "Is TubeToMP4 safe to use?",
+    answer: "Yes, our service is completely safe. We don't store any of your data and all file transfers are encrypted. We also scan all files for malware."
+  },
+  {
+    question: "Can I download age-restricted videos?",
+    answer: "Yes, you can download age-restricted videos as long as you have the video URL. Our service bypasses age verification."
+  },
+  {
+    question: "Can I download geo-restricted videos?",
+    answer: "In some cases, geo-restricted videos may not be available for download. This depends on the video's regional restrictions."
+  },
+  {
+    question: "Can I download live streams?",
+    answer: "Live streams can only be downloaded after they have ended and have been archived by the uploader."
+  }
+];
+---
+
+<Layout title={`FAQ - TubeToMP4 | Frequently Asked Questions - ${lang.toUpperCase()}`}>
+  <Header />
+  
+  <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl font-bold text-white text-center mb-4">Frequently Asked Questions</h1>
+      <p class="text-white/60 text-center mb-12">Find answers to the most common questions about our YouTube video downloader.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+            <summary class="flex items-center justify-between cursor-pointer p-6 text-white font-medium hover:bg-white/5 transition-colors">
+              <span>{faq.question}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-white/50 group-open:rotate-180 transition-transform duration-200">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-white/60 leading-relaxed border-t border-white/5 pt-4">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

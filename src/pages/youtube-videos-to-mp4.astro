@@ -1,0 +1,177 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ConverterWidget from '../components/ConverterWidget.tsx';
+---
+
+<Layout 
+  title="YouTube Videos to MP4 - Download Multiple Videos | TubeToMP4"
+  description="Convert YouTube videos to MP4 format. Download single or multiple YouTube videos in HD quality. Fast, free, and easy batch video conversion."
+>
+  <Header />
+  
+  <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-brand-red/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-brand-red text-sm font-medium mb-4">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-red"></span>
+        </span>
+        Batch Conversion Supported
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
+        YouTube Videos to <span class="text-brand-red bg-clip-text text-transparent bg-gradient-to-r from-brand-red to-orange-500">MP4</span>
+      </h1>
+      
+      <p class="text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Convert and download YouTube videos to MP4 format. Save your favorite videos in high quality for offline viewing on any device.
+      </p>
+
+      <ConverterWidget client:load lang="en" />
+    </div>
+  </main>
+
+  <section class="py-24 bg-brand-dark relative z-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Main Intro -->
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Convert YouTube Videos to MP4</h2>
+        <p class="text-lg text-white/60 leading-relaxed">
+          Our YouTube videos to MP4 converter is the perfect tool for downloading and saving your favorite content. Whether you want to download a single clip or an entire collection, we make the process simple, fast, and high-quality.
+        </p>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Universal Compatibility</h3>
+          <p class="text-white/50 text-sm leading-relaxed">MP4 is the most compatible video format, working flawlessly on all devices, media players, and streaming platforms.</p>
+        </div>
+
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Offline Viewing</h3>
+          <p class="text-white/50 text-sm leading-relaxed">Watch your downloaded videos anytime, anywhere - on the plane, in the car, or anywhere without internet.</p>
+        </div>
+
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">High Quality</h3>
+          <p class="text-white/50 text-sm leading-relaxed">Download videos in their original crisp quality, from 360p up to stunning 4K and 8K resolution.</p>
+        </div>
+
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Save Storage</h3>
+          <p class="text-white/50 text-sm leading-relaxed">MP4 format offers excellent compression, saving valuable space on your device while maintaining quality.</p>
+        </div>
+      </div>
+
+      <!-- How To Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 items-center">
+        <div>
+           <h2 class="text-3xl font-bold text-white mb-8">How to Download</h2>
+            <div class="space-y-6">
+              <div class="flex gap-4">
+                 <div class="flex-shrink-0 w-8 h-8 rounded-full bg-brand-red/20 text-brand-red font-bold flex items-center justify-center">1</div>
+                 <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Find Your Video</h3>
+                    <p class="text-white/60">Brows YouTube and find the video you want to download.</p>
+                 </div>
+              </div>
+              <div class="flex gap-4">
+                 <div class="flex-shrink-0 w-8 h-8 rounded-full bg-brand-red/20 text-brand-red font-bold flex items-center justify-center">2</div>
+                 <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Copy the URL</h3>
+                    <p class="text-white/60">Copy the video link from your browser's address bar or share button.</p>
+                 </div>
+              </div>
+              <div class="flex gap-4">
+                 <div class="flex-shrink-0 w-8 h-8 rounded-full bg-brand-red/20 text-brand-red font-bold flex items-center justify-center">3</div>
+                 <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Paste and Convert</h3>
+                    <p class="text-white/60">Paste the URL into our converter above and click "Start".</p>
+                 </div>
+              </div>
+              <div class="flex gap-4">
+                 <div class="flex-shrink-0 w-8 h-8 rounded-full bg-brand-red/20 text-brand-red font-bold flex items-center justify-center">4</div>
+                 <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Download MP4</h3>
+                    <p class="text-white/60">Select your preferred quality and download the file instantly.</p>
+                 </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Info Card -->
+        <div class="bg-gradient-to-br from-zinc-900 to-black border border-white/10 rounded-2xl p-8">
+           <h3 class="text-2xl font-bold text-white mb-6">Supported Video Types</h3>
+           <ul class="space-y-4">
+              <li class="flex items-center gap-3 text-white/70">
+                 <svg class="w-5 h-5 text-brand-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                 <span>Music Videos & Official Audio</span>
+              </li>
+              <li class="flex items-center gap-3 text-white/70">
+                 <svg class="w-5 h-5 text-brand-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                 <span>Educational Tutorials & Lectures</span>
+              </li>
+              <li class="flex items-center gap-3 text-white/70">
+                 <svg class="w-5 h-5 text-brand-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                 <span>Gaming Walkthroughs & Clips</span>
+              </li>
+              <li class="flex items-center gap-3 text-white/70">
+                 <svg class="w-5 h-5 text-brand-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                 <span>Vlogs & Influencer Content</span>
+              </li>
+              <li class="flex items-center gap-3 text-white/70">
+                 <svg class="w-5 h-5 text-brand-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                 <span>News & Documentaries</span>
+              </li>
+           </ul>
+        </div>
+      </div>
+
+      <!-- Keywords / Tags Section -->
+      <div class="border-t border-white/5 pt-16">
+        <div class="text-center max-w-3xl mx-auto">
+          <h3 class="text-lg font-semibold text-white/80 mb-6">Common Search Variations</h3>
+          <div class="flex flex-wrap justify-center gap-3">
+{["yotube mp4", "youtube tomp4", "yt yo mp4", "youyube to mp4", "toutube to mp4", "youtuber to mp4", "youtube-mp4", "youtube to mp4 free", "yourube mp4", "yuotube to mp4", "youtube url to mp4", "youtube to mp4'", "ytb to mp4", "youtube videos to mp4", "youitube to mp4", "youtube ot mp4", "youtube ro mp4", "ytmp34", "youtubve to mp4", "youtune to mp4"].map((tag) => (
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white/50 text-sm hover:text-white hover:border-white/20 transition-all cursor-default">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <p class="text-white/40 text-sm mt-6">
+            Our intelligent converter recognizes all these variations to ensure you get the video you want, no matter how you search for it.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

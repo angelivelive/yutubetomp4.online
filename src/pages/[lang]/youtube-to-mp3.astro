@@ -1,11 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import ConverterWidget from '../components/ConverterWidget.tsx';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ConverterWidget from '../../components/ConverterWidget.tsx';
+import { languages, type Language } from '../../i18n/translations';
+
+export function getStaticPaths() {
+  return Object.keys(languages).filter(l => l !== 'en').map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Language };
 ---
 
-<Layout title="YouTube to MP3 Converter - Extract Audio Free | TubeToMP4">
+<Layout title={`YouTube to MP3 Converter - ${lang.toUpperCase()} | TubeToMP4`}>
   <Header />
   
   <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -22,10 +31,10 @@ import ConverterWidget from '../components/ConverterWidget.tsx';
       </p>
 
       <!-- Converter Widget Island -->
-      <ConverterWidget client:load lang="en" />
+      <ConverterWidget client:load lang={lang} />
       
       <p class="text-xs text-white/30 uppercase tracking-widest font-medium pt-4">
-        By using our service you agree to our <a href="/terms" class="text-white/50 hover:text-white underline decoration-white/30 transition-colors">Terms of Service</a>
+        By using our service you agree to our <a href={`/${lang}/terms`} class="text-white/50 hover:text-white underline decoration-white/30 transition-colors">Terms of Service</a>
       </p>
     </div>
   </main>

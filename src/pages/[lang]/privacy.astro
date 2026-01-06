@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { languages, type Language } from '../../i18n/translations';
+
+export function getStaticPaths() {
+  return Object.keys(languages).filter(l => l !== 'en').map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Language };
+---
+
+<Layout title={`Privacy Policy - TubeToMP4 - ${lang.toUpperCase()}`}>
+  <Header />
+  
+  <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose prose-invert prose-zinc">
+      <h1 class="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
+      
+      <p class="text-white/60 mb-6">Last updated: January 2026</p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">1. Information We Collect</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        TubeToMP4 is designed with privacy in mind. We do not collect, store, or share any personal information. We do not require registration or login.
+      </p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">2. Data Processing</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        When you use our service to convert videos:
+      </p>
+      <ul class="text-white/60 space-y-2 mb-4 list-disc pl-6">
+        <li>Video URLs are processed temporarily to fetch the video</li>
+        <li>No video content is stored on our servers</li>
+        <li>All processing happens in real-time</li>
+        <li>We do not track your downloads or viewing history</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">3. Cookies</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        We do not use cookies to track users. Any cookies used are strictly necessary for the website to function properly.
+      </p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">4. Third-Party Services</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        Our service may interact with third-party platforms (like YouTube) to fetch video information. Please refer to their respective privacy policies for information on how they handle data.
+      </p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">5. Data Security</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        Since we don't collect or store personal data, there is minimal risk to your privacy. All connections to our service are encrypted using HTTPS.
+      </p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">6. Children's Privacy</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        Our service is not directed to children under 13. We do not knowingly collect information from children.
+      </p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">7. Changes to Privacy Policy</h2>
+      <p class="text-white/60 leading-relaxed mb-4">
+        We may update this privacy policy from time to time. We will notify users of any material changes by posting the new policy on this page.
+      </p>
+
+      <h2 class="text-2xl font-bold text-white mt-8 mb-4">8. Contact</h2>
+      <p class="text-white/60 leading-relaxed">
+        If you have any questions about this Privacy Policy, please contact us through our website.
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

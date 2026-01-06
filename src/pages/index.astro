@@ -1,16 +1,79 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ConverterWidget from '../components/ConverterWidget.tsx';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="YouTube to MP4 Converter - Fast, Free & Premium Quality">
+  <Header />
+  
+  <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Background Accents -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-brand-red/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
+        Convert YouTube to <span class="text-brand-red bg-clip-text text-transparent bg-gradient-to-r from-brand-red to-orange-500">MP4</span>
+      </h1>
+      
+      <p class="text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+        The fastest and most reliable tool to download YouTube videos in 1080p, 4K, and 8K. No ads, no registration, completely free.
+      </p>
+
+      <!-- Converter Widget Island -->
+      <ConverterWidget client:load />
+      
+      <p class="text-xs text-white/30 uppercase tracking-widest font-medium pt-4">
+        By using our service you agree to our <a href="#" class="text-white/50 hover:text-white underline decoration-white/30 transition-colors">Terms of Service</a>
+      </p>
+    </div>
+  </main>
+
+  <section id="features" class="py-20 bg-brand-dark relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Lightning Fast</h3>
+          <p class="text-white/60 leading-relaxed">
+            Our advanced compression engines ensure the fastest download speeds without compromising quality.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Safe & Secure</h3>
+          <p class="text-white/60 leading-relaxed">
+            No viruses, no malware. We scan every file. No registration required, keeping your data private.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="group bg-white/5 border border-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-brand-red">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.125c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">All Devices</h3>
+          <p class="text-white/60 leading-relaxed">
+            Fully responsive design that works perfectly on Windows, Mac, iOS, Android, and tablets.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

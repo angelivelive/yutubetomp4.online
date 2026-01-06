@@ -1,0 +1,25 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Convert and download YouTube videos to MP4 in 1080p, 2k, 4k. Fast, free, and no registration required." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-brand-dark text-white min-h-screen flex flex-col font-body antialiased selection:bg-brand-red selection:text-white overflow-x-hidden">
+		<slot />
+	</body>
+</html>

@@ -2,27 +2,24 @@ import { useState, useRef, useEffect } from 'react';
 
 const languages = [
     { code: 'en', name: 'English' },
-    { code: 'de', name: 'Deutsch' },
     { code: 'es', name: 'Español' },
-    { code: 'fil', name: 'Filipino' },
+    { code: 'de', name: 'Deutsch' },
     { code: 'fr', name: 'Français' },
-    { code: 'hi', name: 'हिन्दी / Hindi' },
-    { code: 'id', name: 'Indonesian' },
-    { code: 'it', name: 'Italiano' },
-    { code: 'ms', name: 'Malay' },
+    { code: 'pt', name: 'Português' },
     { code: 'ja', name: '日本語' },
     { code: 'ko', name: '한국어' },
-    { code: 'ru', name: 'Русский' },
-    { code: 'pt', name: 'Português' },
-    { code: 'tr', name: 'Türkçe' },
-    { code: 'th', name: 'ภาษาไทย' },
     { code: 'ar', name: 'العربية' },
 ];
 
-export default function LanguageSelector() {
+interface Props {
+    currentLang?: string;
+}
+
+export default function LanguageSelector({ currentLang = 'en' }: Props) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(languages[0]);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const currentLanguage = languages.find(l => l.code === currentLang) || languages[0];
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -34,10 +31,27 @@ export default function LanguageSelector() {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const handleSelect = (lang: typeof languages[0]) => {
-        setSelected(lang);
+    const handleSelect = (langCode: string) => {
         setIsOpen(false);
-        // In a real app, this would trigger i18n change
+
+        // Navigate to the new locale URL
+        const currentPath = window.location.pathname;
+
+        // Remove current locale prefix if present
+        let pathWithoutLocale = currentPath;
+        for (const lang of languages) {
+            if (currentPath.startsWith(`/${lang.code}/`) || currentPath === `/${lang.code}`) {
+                pathWithoutLocale = currentPath.replace(`/${lang.code}`, '') || '/';
+                break;
+            }
+        }
+
+        // Build new URL
+        const newPath = langCode === 'en'
+            ? pathWithoutLocale
+            : `/${langCode}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
+
+        window.location.href = newPath || '/';
     };
 
     return (
@@ -46,7 +60,7 @@ export default function LanguageSelector() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-xs font-medium text-white/90"
             >
-                <span>{selected.code.toUpperCase()}</span>
+                <span>{currentLanguage.code.toUpperCase()}</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -67,8 +81,8 @@ export default function LanguageSelector() {
                         {languages.map((lang) => (
                             <button
                                 key={lang.code}
-                                onClick={() => handleSelect(lang)}
-                                className={`w-full text-left px-4 py-2.5 text-sm hover:bg-white/10 transition-colors ${selected.code === lang.code ? 'text-brand-red' : 'text-white/80'
+                                onClick={() => handleSelect(lang.code)}
+                                className={`w-full text-left px-4 py-2.5 text-sm hover:bg-white/10 transition-colors ${currentLang === lang.code ? 'text-brand-red' : 'text-white/80'
                                     }`}
                             >
                                 {lang.name}

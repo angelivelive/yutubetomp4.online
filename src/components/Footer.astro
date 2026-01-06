@@ -1,4 +1,8 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const currentYear = new Date().getFullYear();
 ---
 
@@ -19,34 +23,34 @@ const currentYear = new Date().getFullYear();
           </span>
         </div>
         <p class="text-white/50 text-sm leading-relaxed max-w-xs">
-          The world's most advanced YouTube to MP4 converter. High definition downloads, zero waiting time, and completely free forever.
+          {t('footer.disclaimer.text')}
         </p>
       </div>
 
       <!-- Pages -->
       <div class="space-y-6">
-        <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Pages</h3>
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider">{t('footer.pages')}</h3>
         <ul class="space-y-3">
-          <li><a href="/" class="text-white/50 hover:text-white transition-colors text-sm">YouTube to MP4</a></li>
-          <li><a href="/youtube-to-mp3" class="text-white/50 hover:text-white transition-colors text-sm">YouTube to MP3</a></li>
-          <li><a href="/faq" class="text-white/50 hover:text-white transition-colors text-sm">FAQ</a></li>
+          <li><a href={lang === 'en' ? '/' : `/${lang}`} class="text-white/50 hover:text-white transition-colors text-sm">{t('nav.home')}</a></li>
+          <li><a href={lang === 'en' ? '/youtube-to-mp3' : `/${lang}/youtube-to-mp3`} class="text-white/50 hover:text-white transition-colors text-sm">{t('nav.mp3')}</a></li>
+          <li><a href={lang === 'en' ? '/faq' : `/${lang}/faq`} class="text-white/50 hover:text-white transition-colors text-sm">{t('nav.faq')}</a></li>
         </ul>
       </div>
 
       <!-- Legal -->
       <div class="space-y-6">
-        <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Legal</h3>
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider">{t('footer.legal')}</h3>
         <ul class="space-y-3">
-          <li><a href="/terms" class="text-white/50 hover:text-white transition-colors text-sm">Terms of Service</a></li>
-          <li><a href="/privacy" class="text-white/50 hover:text-white transition-colors text-sm">Privacy Policy</a></li>
+          <li><a href={lang === 'en' ? '/terms' : `/${lang}/terms`} class="text-white/50 hover:text-white transition-colors text-sm">Terms of Service</a></li>
+          <li><a href={lang === 'en' ? '/privacy' : `/${lang}/privacy`} class="text-white/50 hover:text-white transition-colors text-sm">Privacy Policy</a></li>
         </ul>
       </div>
 
       <!-- Disclaimer -->
       <div class="space-y-6">
-         <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Disclaimer</h3>
+         <h3 class="text-sm font-semibold text-white uppercase tracking-wider">{t('footer.disclaimer')}</h3>
          <p class="text-white/40 text-xs leading-relaxed">
-            TubeToMP4 is an independent tool and is not affiliated with YouTube, Google, or Alphabet Inc. Please use this service responsibly and respect copyright laws.
+            {t('footer.disclaimer.text')}
          </p>
       </div>
     </div>
@@ -54,7 +58,7 @@ const currentYear = new Date().getFullYear();
     <!-- Bottom Bar -->
     <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
       <p class="text-white/40 text-sm">
-        &copy; {currentYear} TubeToMP4. All rights reserved.
+        &copy; {currentYear} TubeToMP4. {t('footer.copyright')}
       </p>
       <div class="flex items-center space-x-6">
           <a href="#" class="text-white/40 hover:text-white transition-colors">

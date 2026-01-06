@@ -1,12 +1,16 @@
 ---
 import LanguageSelector from './LanguageSelector.tsx';
+import { getLangFromUrl, useTranslations } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <header class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-dark/80 backdrop-blur-xl">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href="/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
+      <a href={lang === 'en' ? '/' : `/${lang}`} class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
         <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-red to-red-600 flex items-center justify-center shadow-lg shadow-brand-red/20 group-hover:shadow-brand-red/40 transition-all duration-300">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-white">
             <path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" />
@@ -19,27 +23,27 @@ import LanguageSelector from './LanguageSelector.tsx';
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-8">
-        <a href="/" class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
-          Home
+        <a href={lang === 'en' ? '/' : `/${lang}`} class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
+          {t('nav.home')}
           <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="/youtube-to-mp3" class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
-          YouTube to MP3
+        <a href={lang === 'en' ? '/youtube-to-mp3' : `/${lang}/youtube-to-mp3`} class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
+          {t('nav.mp3')}
           <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="/#features" class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
-          Features
+        <a href={lang === 'en' ? '/#features' : `/${lang}#features`} class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
+          {t('nav.features')}
           <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="/faq" class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
-          FAQ
+        <a href={lang === 'en' ? '/faq' : `/${lang}/faq`} class="text-sm font-medium text-white/70 hover:text-white transition-colors relative group">
+          {t('nav.faq')}
           <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red transition-all duration-300 group-hover:w-full"></span>
         </a>
       </nav>
 
       <!-- Language Selector -->
       <div class="hidden md:flex items-center">
-        <LanguageSelector client:load />
+        <LanguageSelector client:load currentLang={lang} />
       </div>
 
       <!-- Mobile Menu Button -->
@@ -55,10 +59,10 @@ import LanguageSelector from './LanguageSelector.tsx';
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden pb-4">
       <nav class="flex flex-col space-y-2 pt-4 border-t border-white/10">
-        <a href="/" class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">Home</a>
-        <a href="/youtube-to-mp3" class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">YouTube to MP3</a>
-        <a href="/#features" class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">Features</a>
-        <a href="/faq" class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">FAQ</a>
+        <a href={lang === 'en' ? '/' : `/${lang}`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.home')}</a>
+        <a href={lang === 'en' ? '/youtube-to-mp3' : `/${lang}/youtube-to-mp3`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.mp3')}</a>
+        <a href={lang === 'en' ? '/#features' : `/${lang}#features`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.features')}</a>
+        <a href={lang === 'en' ? '/faq' : `/${lang}/faq`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.faq')}</a>
       </nav>
     </div>
   </div>

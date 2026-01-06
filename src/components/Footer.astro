@@ -32,6 +32,7 @@ const currentYear = new Date().getFullYear();
         <h3 class="text-sm font-semibold text-white uppercase tracking-wider">{t('footer.pages')}</h3>
         <ul class="space-y-3">
           <li><a href={lang === 'en' ? '/' : `/${lang}`} class="text-white/50 hover:text-white transition-colors text-sm">{t('nav.home')}</a></li>
+          <li><a href={lang === 'en' ? '/youtube-to-mp4' : `/${lang}/youtube-to-mp4`} class="text-white/50 hover:text-white transition-colors text-sm">YouTube to MP4 Guide</a></li>
           <li><a href={lang === 'en' ? '/youtube-to-mp3' : `/${lang}/youtube-to-mp3`} class="text-white/50 hover:text-white transition-colors text-sm">{t('nav.mp3')}</a></li>
           <li><a href={lang === 'en' ? '/faq' : `/${lang}/faq`} class="text-white/50 hover:text-white transition-colors text-sm">{t('nav.faq')}</a></li>
         </ul>

@@ -13,7 +13,21 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.8,
+      lastmod: new Date(),
+      serialize(item) {
+        if (item.url === 'https://www.yutubetomp4.online/') {
+          item.changefreq = 'daily';
+          item.priority = 1.0;
+        }
+        return item;
+      }
+    })
+  ],
 
   i18n: {
     defaultLocale: 'en',

@@ -1,4 +1,6 @@
 ---
+import { languages } from "../i18n/translations";
+
 interface Props {
   title: string;
   description: string;
@@ -6,37 +8,54 @@ interface Props {
   image?: string;
 }
 
-const { 
-  title, 
-  description, 
-  url = Astro.url, 
-  image = "/favicon.png" 
+const {
+  title,
+  description,
+  url = Astro.url,
+  image = "/favicon.png",
 } = Astro.props;
+
+const siteUrl = "https://www.yutubetomp4.online";
+const path = Astro.url.pathname;
+const currentLang =
+  Object.keys(languages).find(
+    (lang) => path.startsWith(`/${lang}/`) || path === `/${lang}`,
+  ) || "en";
+
+// Get clean slug without language prefix
+let slug = path;
+if (currentLang !== "en") {
+  slug = path.replace(`/${currentLang}`, "");
+}
+// Ensure slug starts with /
+if (!slug.startsWith("/")) slug = "/" + slug;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || siteUrl);
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "TubeToMP4",
-  "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "Any",
-  "offers": {
+  name: "TubeToMP4",
+  applicationCategory: "MultimediaApplication",
+  operatingSystem: "Any",
+  offers: {
     "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
+    price: "0",
+    priceCurrency: "USD",
   },
-  "aggregateRating": {
+  aggregateRating: {
     "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1250"
+    ratingValue: "4.8",
+    ratingCount: "1250",
   },
-  "description": description,
-  "featureList": [
+  description: description,
+  featureList: [
     "YouTube to MP4 conversion",
     "4K Video Download",
     "No registration required",
-    "Unlimited downloads"
+    "Unlimited downloads",
   ],
-  "url": url
+  url: canonicalUrl.toString(),
 };
 ---
 
@@ -44,24 +63,47 @@ const schema = {
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Hreflang Tags for SEO -->
+{
+  Object.keys(languages).map((code) => {
+    const href =
+      code === "en"
+        ? `${siteUrl}${slug === "/" ? "" : slug}`
+        : `${siteUrl}/${code}${slug === "/" ? "" : slug}`;
+    return <link rel="alternate" hreflang={code} href={href} />;
+  })
+}
+<link
+  rel="alternate"
+  hreflang="x-default"
+  href={`${siteUrl}${slug === "/" ? "" : slug}`}
+/>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={url} />
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
+<meta property="og:image" content={new URL(image, siteUrl)} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={url} />
+<meta property="twitter:url" content={canonicalUrl} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={image} />
+<meta property="twitter:image" content={new URL(image, siteUrl)} />
 
 <!-- 2026 Agentic SEO: SoftwareApplication Schema -->
 <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
 <!-- AI Agent Meta Tags -->
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="ai-agent" content=" TubeToMP4 allows direct video downloading via URL. Capable of processing YouTube links to MP4 format." />
+<meta
+  name="robots"
+  content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+/>
+<meta
+  name="ai-agent"
+  content=" TubeToMP4 allows direct video downloading via URL. Capable of processing YouTube links to MP4 format."
+/>

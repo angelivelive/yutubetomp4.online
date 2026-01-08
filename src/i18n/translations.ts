@@ -175,6 +175,8 @@ export const translations = {
         'footer.legal': 'Rechtliches',
         'footer.disclaimer': 'Haftungsausschluss',
         'footer.copyright': 'Alle Rechte vorbehalten.',
+
+
     },
     fr: {
         'nav.home': 'Accueil',
@@ -187,6 +189,15 @@ export const translations = {
         'converter.placeholder': 'Collez le lien YouTube ici...',
         'converter.start': 'Démarrer',
         'features.title': 'Pourquoi choisir TubeToMP4?',
+        // Converter
+        'converter.processing': 'Analyse de la vidéo...',
+        'converter.download.mp3': 'Télécharger MP3',
+        'converter.download.mp4': 'Télécharger MP4',
+        // Footer (Fallback to English if needed or translated)
+        'footer.pages': 'Pages',
+        'footer.legal': 'Légal',
+        'footer.disclaimer': 'Avis de non-responsabilité',
+        'footer.copyright': 'Tous droits réservés.',
     },
     pt: {
         'nav.home': 'Início',
@@ -199,6 +210,15 @@ export const translations = {
         'converter.placeholder': 'Cole o link do YouTube aqui...',
         'converter.start': 'Iniciar',
         'features.title': 'Por que escolher TubeToMP4?',
+        // Converter
+        'converter.processing': 'Analisando vídeo...',
+        'converter.download.mp3': 'Baixar MP3',
+        'converter.download.mp4': 'Baixar MP4',
+        // Footer
+        'footer.pages': 'Páginas',
+        'footer.legal': 'Legal',
+        'footer.disclaimer': 'Aviso Legal',
+        'footer.copyright': 'Todos os direitos reservados.',
     },
     ja: {
         'nav.home': 'ホーム',
@@ -211,6 +231,15 @@ export const translations = {
         'converter.placeholder': 'YouTubeリンクをここに貼り付け...',
         'converter.start': '開始',
         'features.title': 'TubeToMP4を選ぶ理由',
+        // Converter
+        'converter.processing': '動画を解析中...',
+        'converter.download.mp3': 'MP3をダウンロード',
+        'converter.download.mp4': 'MP4をダウンロード',
+        // Footer
+        'footer.pages': 'ページ',
+        'footer.legal': '法律',
+        'footer.disclaimer': '免責事項',
+        'footer.copyright': 'All rights reserved.',
     },
     ko: {
         'nav.home': '홈',
@@ -223,6 +252,15 @@ export const translations = {
         'converter.placeholder': 'YouTube 링크를 여기에 붙여넣기...',
         'converter.start': '시작',
         'features.title': 'TubeToMP4를 선택하는 이유',
+        // Converter
+        'converter.processing': '동영상 분석 중...',
+        'converter.download.mp3': 'MP3 다운로드',
+        'converter.download.mp4': 'MP4 다운로드',
+        // Footer
+        'footer.pages': '페이지',
+        'footer.legal': '법률',
+        'footer.disclaimer': '면책 조항',
+        'footer.copyright': 'All rights reserved.',
     },
     ar: {
         'nav.home': 'الرئيسية',
@@ -235,6 +273,15 @@ export const translations = {
         'converter.placeholder': 'الصق رابط YouTube هنا...',
         'converter.start': 'ابدأ',
         'features.title': 'لماذا تختار TubeToMP4؟',
+        // Converter
+        'converter.processing': 'جاري تحليل الفيديو...',
+        'converter.download.mp3': 'تحميل MP3',
+        'converter.download.mp4': 'تحميل MP4',
+        // Footer
+        'footer.pages': 'الصفحات',
+        'footer.legal': 'قانوني',
+        'footer.disclaimer': 'إخلاء المسؤولية',
+        'footer.copyright': 'جميع الحقوق محفوظة.',
     },
 } as const;
 

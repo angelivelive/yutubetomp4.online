@@ -21,6 +21,7 @@ export default defineConfig({
       lastmod: new Date(),
       serialize(item) {
         if (item.url === 'https://www.yutubetomp4.online/') {
+          // @ts-ignore
           item.changefreq = 'daily';
           item.priority = 1.0;
         }

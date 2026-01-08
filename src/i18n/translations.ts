@@ -18,6 +18,7 @@ export const translations = {
         // Header
         'nav.home': 'Home',
         'nav.mp3': 'YouTube to MP3',
+        'nav.mp4_guide': 'YouTube to MP4 Guide',
         'nav.features': 'Features',
         'nav.faq': 'FAQ',
 
@@ -87,6 +88,7 @@ export const translations = {
         // Header
         'nav.home': 'Inicio',
         'nav.mp3': 'YouTube a MP3',
+        'nav.mp4_guide': 'Guía YouTube a MP4',
         'nav.features': 'Características',
         'nav.faq': 'Preguntas',
 

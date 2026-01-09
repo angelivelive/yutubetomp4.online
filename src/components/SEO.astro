@@ -6,6 +6,7 @@ interface Props {
   description: string;
   url?: string;
   image?: string;
+  keywords?: string;
 }
 
 const {
@@ -13,6 +14,7 @@ const {
   description,
   url = Astro.url,
   image = "/favicon.png",
+  keywords,
 } = Astro.props;
 
 const siteUrl = "https://www.yutubetomp4.online";
@@ -63,7 +65,9 @@ const schema = {
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
 <link rel="canonical" href={canonicalUrl} />
+{/* Placeholder for Bing Webmaster Tools */}
 
 <!-- Hreflang Tags for SEO -->
 {

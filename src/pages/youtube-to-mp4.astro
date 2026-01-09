@@ -4,12 +4,91 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ConverterWidget from "../components/ConverterWidget.tsx";
 
-const title = "YouTube to MP4 Converter - The Ultimate Guide (2026)";
+const title = "YouTube to MP4 Converter - Free Download in HD/4K (2026)";
 const description =
-  "Learn how to use the best YouTube to MP4 online converter. Download videos in 1080p, 4K, and 8K completely free. Comprehensive guide and tips.";
+  "Convert YouTube videos to MP4 in 4K, 2K, 1080p, and 720p. Free, fast, and safe YouTube to MP4 Downloader. No software installation needed.";
+const keywords =
+  "youtube to mp4, youtube converter, youtube video downloader, yt to mp4, mp4 converter, youtube downloader online, free youtube converter, 4k video downloader, youtube to mp4 hd";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is TubeToMP4 really free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, 100%. We do not charge for any downloads, and there are no premium tiers hiding the best features.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need to install any software?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. TubeToMP4 is entirely web-based. You just need a modern browser (Chrome, Firefox, Safari, Edge) and an internet connection.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I download playlists or entire channels?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Currently, our tool processes one video at a time to ensure the fastest possible speed for all users.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What about long videos (over 2 hours)?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Long videos are supported, but processing time and download time will naturally increase with length.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Will downloaded videos have ads?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. The MP4 files you download are clean, ad-free copies of the source video.",
+      },
+    },
+  ],
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Convert YouTube to MP4",
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Paste URL",
+      text: "Enter Keywords or Copy and Paste YouTube Video URL into the Search Box.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Select Quality",
+      text: "Select MP4 Video quality (e.g., 1080p, 4K) and click the Download button.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Download",
+      text: "Press the Download button after the conversion is complete to save the file.",
+    },
+  ],
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} keywords={keywords}>
+  {/* JSON-LD Structured Data */}
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
   <Header />
 
   <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-brand-dark">

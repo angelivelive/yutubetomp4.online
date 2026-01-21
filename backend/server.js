@@ -72,7 +72,13 @@ app.post('/api/info', async (req, res) => {
       noCheckCertificates: true,
       noWarnings: true,
       preferFreeFormats: true,
-      addHeader: ['referer:youtube.com', 'user-agent:Mozilla/5.0'],
+      noPlaylist: true,
+      extractorArgs: 'youtube:player_client=ios,web',
+      addHeader: [
+        'referer:https://www.youtube.com/',
+        'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'accept-language:en-US,en;q=0.9',
+      ],
     });
 
     // Extract relevant formats (MP4 video + audio)
@@ -191,7 +197,13 @@ app.post('/api/download', async (req, res) => {
       format: format,
       noCheckCertificates: true,
       noWarnings: true,
-      addHeader: ['referer:youtube.com', 'user-agent:Mozilla/5.0'],
+      noPlaylist: true,
+      extractorArgs: 'youtube:player_client=ios,web',
+      addHeader: [
+        'referer:https://www.youtube.com/',
+        'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'accept-language:en-US,en;q=0.9',
+      ],
     });
 
     // Find the requested format - search by formatId if provided, otherwise use the requested format
@@ -258,6 +270,13 @@ app.post('/api/qualities', async (req, res) => {
       dumpSingleJson: true,
       noCheckCertificates: true,
       noWarnings: true,
+      noPlaylist: true,
+      extractorArgs: 'youtube:player_client=ios,web',
+      addHeader: [
+        'referer:https://www.youtube.com/',
+        'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'accept-language:en-US,en;q=0.9',
+      ],
     });
 
     // Get unique quality options

@@ -63,6 +63,9 @@ const t = useTranslations(lang);
         <a href={lang === 'en' ? '/youtube-to-mp3' : `/${lang}/youtube-to-mp3`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.mp3')}</a>
         <a href={lang === 'en' ? '/#features' : `/${lang}#features`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.features')}</a>
         <a href={lang === 'en' ? '/faq' : `/${lang}/faq`} class="px-4 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors">{t('nav.faq')}</a>
+        <div class="px-4 pt-2">
+          <LanguageSelector client:load currentLang={lang} />
+        </div>
       </nav>
     </div>
   </div>

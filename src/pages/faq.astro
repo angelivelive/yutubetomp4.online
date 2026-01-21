@@ -35,33 +35,128 @@ const faqs = [
   {
     question: "Can I download live streams?",
     answer: "Live streams can only be downloaded after they have ended and have been archived by the uploader."
+  },
+  {
+    question: "How fast is the conversion process?",
+    answer: "Our conversion process is extremely fast. Most videos are processed within seconds, depending on the video length and your selected quality."
+  },
+  {
+    question: "What is the maximum video quality I can download?",
+    answer: "You can download videos in qualities up to 4K (2160p) and even 8K when available. The quality options depend on the original video's resolution."
   }
 ];
+
+// FAQPage Schema for Bing & Google Rich Results
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
+// Breadcrumb Schema for Navigation
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.yutubetomp4.online",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "FAQ",
+      item: "https://www.yutubetomp4.online/faq",
+    },
+  ],
+};
 ---
 
-<Layout title="FAQ - TubeToMP4 | Frequently Asked Questions">
+<Layout
+  title="FAQ - TubeToMP4 | Frequently Asked Questions About YouTube to MP4 Converter"
+  description="Find answers to frequently asked questions about TubeToMP4 YouTube video downloader. Learn about supported formats, video quality, safety, and more."
+  keywords="youtube to mp4 faq, youtube downloader questions, video converter help, mp4 download faq, tubetomp4 help"
+>
   <Header />
-  
+
+  <!-- FAQPage Schema for Bing Rich Snippets -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
   <main class="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
+      <!-- Breadcrumb Navigation for Bing -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-white/50">
+          <li>
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+          </li>
+          <li>
+            <span class="mx-2">/</span>
+          </li>
+          <li class="text-white" aria-current="page">FAQ</li>
+        </ol>
+      </nav>
+
       <h1 class="text-4xl font-bold text-white text-center mb-4">Frequently Asked Questions</h1>
       <p class="text-white/60 text-center mb-12">Find answers to the most common questions about our YouTube video downloader.</p>
-      
-      <div class="space-y-4">
+
+      <div class="space-y-4" itemscope itemtype="https://schema.org/FAQPage">
         {faqs.map((faq, index) => (
-          <details class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+          <details
+            class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden"
+            itemscope
+            itemprop="mainEntity"
+            itemtype="https://schema.org/Question"
+          >
             <summary class="flex items-center justify-between cursor-pointer p-6 text-white font-medium hover:bg-white/5 transition-colors">
-              <span>{faq.question}</span>
+              <span itemprop="name">{faq.question}</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-white/50 group-open:rotate-180 transition-transform duration-200">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
               </svg>
             </summary>
-            <div class="px-6 pb-6 text-white/60 leading-relaxed border-t border-white/5 pt-4">
-              {faq.answer}
+            <div
+              class="px-6 pb-6 text-white/60 leading-relaxed border-t border-white/5 pt-4"
+              itemscope
+              itemprop="acceptedAnswer"
+              itemtype="https://schema.org/Answer"
+            >
+              <span itemprop="text">{faq.answer}</span>
             </div>
           </details>
         ))}
       </div>
+
+      <!-- Additional SEO Content for Bing -->
+      <section class="mt-16 text-center">
+        <h2 class="text-2xl font-bold text-white mb-4">Still Have Questions?</h2>
+        <p class="text-white/60 mb-6">
+          If you can't find the answer you're looking for, check out our detailed guides or contact us.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a
+            href="/youtube-to-mp4"
+            class="inline-flex items-center px-6 py-3 bg-brand-red hover:bg-brand-red/90 text-white font-medium rounded-xl transition-colors"
+          >
+            YouTube to MP4 Guide
+          </a>
+          <a
+            href="/youtube-to-mp3"
+            class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-medium rounded-xl transition-colors"
+          >
+            YouTube to MP3 Guide
+          </a>
+        </div>
+      </section>
     </div>
   </main>
 

@@ -1,7 +1,46 @@
 import { useState } from 'react';
 
 // API URL - Update this after deploying to Render
-const API_URL = import.meta.env.PUBLIC_API_URL || 'https://tubetomp4-api.onrender.com';
+const API_URL = import.meta.env.PUBLIC_API_URL || 'https://yutubetomp4-online.onrender.com';
+
+// Retry configuration for handling cold starts on free tier hosting
+const MAX_RETRIES = 3;
+const INITIAL_TIMEOUT = 30000; // 30 seconds for cold start
+const RETRY_DELAY = 2000; // 2 seconds between retries
+
+// Helper function to fetch with timeout and retry
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  retries = MAX_RETRIES,
+  timeout = INITIAL_TIMEOUT
+): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+
+    // Check if it's an abort error (timeout) or network error
+    const isNetworkError = error instanceof TypeError ||
+      (error instanceof DOMException && error.name === 'AbortError');
+
+    if (isNetworkError && retries > 0) {
+      // Wait before retrying
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+      return fetchWithRetry(url, options, retries - 1, timeout);
+    }
+
+    throw error;
+  }
+}
 
 interface VideoFormat {
     formatId: string;
@@ -161,7 +200,7 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
         setVideoInfo(null);
 
         try {
-            const response = await fetch(`${API_URL}/api/info`, {
+            const response = await fetchWithRetry(`${API_URL}/api/info`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -170,7 +209,7 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
+                const errorData = await response.json().catch(() => ({}));
                 throw new Error(errorData.message || 'Failed to fetch video info');
             }
 
@@ -184,7 +223,16 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
             }
         } catch (err) {
             console.error('Error:', err);
-            setError(err instanceof Error ? err.message : t.error);
+
+            // Provide user-friendly error messages based on error type
+            let errorMessage = t.error;
+            if (err instanceof TypeError || (err instanceof DOMException && err.name === 'AbortError')) {
+                errorMessage = 'Server is temporarily unavailable. Please try again in a moment.';
+            } else if (err instanceof Error) {
+                errorMessage = err.message;
+            }
+
+            setError(errorMessage);
             setStatus('error');
         }
     };
@@ -195,7 +243,7 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
         setStatus('downloading');
 
         try {
-            const response = await fetch(`${API_URL}/api/download`, {
+            const response = await fetchWithRetry(`${API_URL}/api/download`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,7 +256,8 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to get download URL');
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Failed to get download URL');
             }
 
             const data = await response.json();
@@ -221,7 +270,16 @@ export default function ConverterWidget({ lang = 'en' }: Props) {
             setStatus('success');
         } catch (err) {
             console.error('Download error:', err);
-            setError(t.error);
+
+            // Provide user-friendly error messages
+            let errorMessage = t.error;
+            if (err instanceof TypeError || (err instanceof DOMException && err.name === 'AbortError')) {
+                errorMessage = 'Server is temporarily unavailable. Please try again.';
+            } else if (err instanceof Error) {
+                errorMessage = err.message;
+            }
+
+            setError(errorMessage);
             setStatus('error');
         }
     };

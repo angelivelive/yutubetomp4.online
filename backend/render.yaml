@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: tubetomp4-api
+    runtime: node
+    region: ohio # or virginia, oregon, frankfurt, singapore
+    plan: free # or starter, standard, etc.
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+    # Auto-deploy when you push to main
+    autoDeploy: true

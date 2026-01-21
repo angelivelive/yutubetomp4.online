@@ -7,6 +7,7 @@ interface Props {
   url?: string;
   image?: string;
   keywords?: string;
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
 const {
@@ -15,9 +16,11 @@ const {
   url = Astro.url,
   image = "/favicon.png",
   keywords,
+  breadcrumbs,
 } = Astro.props;
 
 const siteUrl = "https://www.yutubetomp4.online";
+const siteName = "TubeToMP4";
 const path = Astro.url.pathname;
 const currentLang =
   Object.keys(languages).find(
@@ -34,10 +37,11 @@ if (!slug.startsWith("/")) slug = "/" + slug;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || siteUrl);
 
-const schema = {
+// SoftwareApplication Schema
+const softwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "TubeToMP4",
+  name: siteName,
   applicationCategory: "MultimediaApplication",
   operatingSystem: "Any",
   offers: {
@@ -49,6 +53,8 @@ const schema = {
     "@type": "AggregateRating",
     ratingValue: "4.8",
     ratingCount: "1250",
+    bestRating: "5",
+    worstRating: "1",
   },
   description: description,
   featureList: [
@@ -56,9 +62,83 @@ const schema = {
     "4K Video Download",
     "No registration required",
     "Unlimited downloads",
+    "HD 1080p support",
+    "Fast conversion speed",
   ],
   url: canonicalUrl.toString(),
+  screenshot: `${siteUrl}/favicon.png`,
+  softwareVersion: "2.0",
+  author: {
+    "@type": "Organization",
+    name: siteName,
+  },
 };
+
+// Organization Schema for Bing Knowledge Panel
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteName,
+  alternateName: "YouTube to MP4 Converter",
+  url: siteUrl,
+  logo: `${siteUrl}/favicon.png`,
+  description: "Free online YouTube to MP4 converter. Download YouTube videos in HD quality up to 4K resolution.",
+  foundingDate: "2024",
+  sameAs: [
+    "https://twitter.com/tubetomp4",
+    "https://www.facebook.com/tubetomp4",
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    availableLanguage: ["English", "Spanish", "German", "French", "Portuguese", "Japanese", "Korean", "Arabic"],
+  },
+};
+
+// WebSite Schema for Bing Sitelinks Search Box
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  alternateName: "TubeToMP4 - YouTube Video Downloader",
+  url: siteUrl,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteUrl}/?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+  inLanguage: currentLang,
+};
+
+// BreadcrumbList Schema for Bing Navigation
+const generateBreadcrumbs = () => {
+  const defaultBreadcrumbs = [
+    { name: "Home", url: siteUrl },
+  ];
+
+  if (slug !== "/" && slug !== "") {
+    const pageName = slug.replace("/", "").replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase());
+    defaultBreadcrumbs.push({ name: pageName, url: canonicalUrl.toString() });
+  }
+
+  const items = breadcrumbs || defaultBreadcrumbs;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+};
+
+const breadcrumbSchema = generateBreadcrumbs();
 ---
 
 <!-- Primary Meta Tags -->
@@ -67,7 +147,24 @@ const schema = {
 <meta name="description" content={description} />
 {keywords && <meta name="keywords" content={keywords} />}
 <link rel="canonical" href={canonicalUrl} />
-{/* Placeholder for Bing Webmaster Tools */}
+
+<!-- Bing SEO Optimization Meta Tags -->
+<meta name="msvalidate.01" content="BING_VERIFICATION_CODE" />
+<meta name="msnbot" content="index, follow" />
+<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="msapplication-TileColor" content="#dc2626" />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+<meta name="theme-color" content="#0f0f0f" />
+<meta name="application-name" content="TubeToMP4" />
+<meta name="msapplication-tooltip" content="Convert YouTube videos to MP4 for free" />
+<meta name="msapplication-starturl" content="/" />
+
+<!-- Geo & Language Targeting for Bing -->
+<meta name="geo.region" content="US" />
+<meta name="geo.placename" content="United States" />
+<meta name="language" content={currentLang} />
+<meta name="content-language" content={currentLang} />
+<meta http-equiv="content-language" content={currentLang} />
 
 <!-- Hreflang Tags for SEO -->
 {
@@ -85,29 +182,57 @@ const schema = {
   href={`${siteUrl}${slug === "/" ? "" : slug}`}
 />
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph / Facebook / Bing -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, siteUrl)} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${siteName} - YouTube to MP4 Converter`} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={currentLang === 'en' ? 'en_US' : `${currentLang}_${currentLang.toUpperCase()}`} />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalUrl} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, siteUrl)} />
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, siteUrl)} />
+<meta name="twitter:site" content="@tubetomp4" />
+<meta name="twitter:creator" content="@tubetomp4" />
 
-<!-- 2026 Agentic SEO: SoftwareApplication Schema -->
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<!-- Dublin Core Metadata for Bing -->
+<meta name="DC.title" content={title} />
+<meta name="DC.description" content={description} />
+<meta name="DC.language" content={currentLang} />
+<meta name="DC.creator" content={siteName} />
+<meta name="DC.publisher" content={siteName} />
+<meta name="DC.format" content="text/html" />
+<meta name="DC.type" content="Service" />
 
-<!-- AI Agent Meta Tags -->
+<!-- Structured Data Schemas for Bing & Google Rich Results -->
+<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<!-- Robots Meta Tags (Bing & Google) -->
 <meta
   name="robots"
   content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
 />
 <meta
-  name="ai-agent"
-  content=" TubeToMP4 allows direct video downloading via URL. Capable of processing YouTube links to MP4 format."
+  name="googlebot"
+  content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
 />
+
+<!-- AI Agent Meta Tags -->
+<meta
+  name="ai-agent"
+  content="TubeToMP4 allows direct video downloading via URL. Capable of processing YouTube links to MP4 format."
+/>
+
+<!-- IndexNow for Bing Instant Indexing -->
+<link rel="indexnow" href={`${siteUrl}/indexnow-key.txt`} />

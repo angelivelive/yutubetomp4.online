@@ -21,11 +21,25 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth">
+<html lang={lang} class="scroll-smooth" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<!-- Favicons for Bing & All Browsers -->
 		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
+
+		<!-- Preconnect for Performance (helps Bing PageSpeed signals) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<!-- DNS Prefetch for External Resources -->
+		<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+		<link rel="dns-prefetch" href="https://www.bing.com" />
+
 		<meta name="generator" content={Astro.generator} />
 		<SEO title={title} description={description} keywords={keywords} />
 		<Analytics />

@@ -194,9 +194,35 @@ app.post('/api/download', async (req, res) => {
       addHeader: ['referer:youtube.com', 'user-agent:Mozilla/5.0'],
     });
 
-    // Find the requested format
-    const selectedFormat = info.formats.find(f => f.format_id === format) ||
-                          info.formats[info.formats.length - 1];
+    // Find the requested format - search by formatId if provided, otherwise use the requested format
+    let selectedFormat;
+    if (formatId) {
+      selectedFormat = info.formats.find(f => f.format_id === formatId);
+    }
+
+    // If format not found by formatId or no formatId provided, try to get the best matching format
+    if (!selectedFormat) {
+      // For audio, prefer m4a/webm audio-only formats
+      if (type === 'audio') {
+        selectedFormat = info.formats.find(f =>
+          f.acodec !== 'none' &&
+          f.vcodec === 'none' &&
+          (f.ext === 'm4a' || f.ext === 'webm')
+        );
+      } else {
+        // For video, prefer mp4 with both audio and video
+        selectedFormat = info.formats.find(f =>
+          f.ext === 'mp4' &&
+          f.acodec !== 'none' &&
+          f.vcodec !== 'none'
+        );
+      }
+    }
+
+    // Fallback to last format if nothing matches
+    if (!selectedFormat) {
+      selectedFormat = info.formats[info.formats.length - 1];
+    }
 
     res.json({
       id: info.id,

@@ -82,12 +82,46 @@ const howToSchema = {
     },
   ],
 };
+
+// Article Schema for Bing content indexing (Bing values article schema for content-heavy pages)
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description: description,
+  image: "https://www.yutubetomp4.online/favicon.png",
+  datePublished: "2024-01-01T00:00:00+00:00",
+  dateModified: new Date().toISOString(),
+  author: {
+    "@type": "Organization",
+    name: "TubeToMP4",
+    url: "https://www.yutubetomp4.online",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "TubeToMP4",
+    url: "https://www.yutubetomp4.online",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.yutubetomp4.online/favicon.png",
+    },
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": "https://www.yutubetomp4.online/youtube-to-mp4",
+  },
+  keywords: keywords,
+  articleSection: "Technology",
+  wordCount: 3500,
+  inLanguage: "en",
+};
 ---
 
 <Layout title={title} description={description} keywords={keywords}>
   {/* JSON-LD Structured Data */}
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <Header />
 
@@ -97,8 +131,8 @@ const howToSchema = {
       <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-6">
         YouTube to <span class="text-brand-red">MP4</span>
       </h1>
-      <p class="text-xl text-white/60 mb-8">
-        Convert and Download YouTube videos to MP4 Free in HD
+      <p class="speakable-answer text-xl text-white/60 mb-8" data-speakable="true">
+        Convert and download YouTube videos to MP4 for free in HD 1080p, 4K, and 8K quality. No registration, no software installation. Works on Windows, Mac, Android, and iPhone.
       </p>
       <div class="flex justify-center w-full">
         <ConverterWidget client:load />

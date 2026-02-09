@@ -72,12 +72,36 @@ const currentYear = new Date().getFullYear();
         </ul>
       </div>
 
-      <!-- Legal -->
+      <!-- More Tools (Internal Links for Bing Crawlability) -->
       <div class="space-y-6">
         <h3 class="text-sm font-semibold text-white uppercase tracking-wider">
-          {t("footer.legal")}
+          More Tools
         </h3>
         <ul class="space-y-3">
+          <li>
+            <a
+              href={lang === "en" ? "/youtube-to-mp4-free" : `/${lang}/youtube-to-mp4-free`}
+              class="text-white/50 hover:text-white transition-colors text-sm"
+              >Free YouTube Converter</a>
+          </li>
+          <li>
+            <a
+              href={lang === "en" ? "/youtube-url-to-mp4" : `/${lang}/youtube-url-to-mp4`}
+              class="text-white/50 hover:text-white transition-colors text-sm"
+              >YouTube URL to MP4</a>
+          </li>
+          <li>
+            <a
+              href={lang === "en" ? "/youtube-videos-to-mp4" : `/${lang}/youtube-videos-to-mp4`}
+              class="text-white/50 hover:text-white transition-colors text-sm"
+              >YouTube Videos to MP4</a>
+          </li>
+          <li>
+            <a
+              href={lang === "en" ? "/ytb-to-mp4" : `/${lang}/ytb-to-mp4`}
+              class="text-white/50 hover:text-white transition-colors text-sm"
+              >YTB to MP4</a>
+          </li>
           <li>
             <a
               href={lang === "en" ? "/terms" : `/${lang}/terms`}

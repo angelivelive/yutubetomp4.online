@@ -8,6 +8,8 @@ interface Props {
   image?: string;
   keywords?: string;
   breadcrumbs?: Array<{ name: string; url: string }>;
+  articleDate?: string;
+  articleModified?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   image = "/favicon.png",
   keywords,
   breadcrumbs,
+  articleDate,
+  articleModified,
 } = Astro.props;
 
 const siteUrl = "https://www.yutubetomp4.online";
@@ -36,6 +40,11 @@ if (currentLang !== "en") {
 if (!slug.startsWith("/")) slug = "/" + slug;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || siteUrl);
+
+// Content freshness: current date for lastmod signals
+const now = new Date().toISOString();
+const publishDate = articleDate || "2024-01-01T00:00:00+00:00";
+const modifiedDate = articleModified || now;
 
 // SoftwareApplication Schema
 const softwareSchema = {
@@ -68,31 +77,47 @@ const softwareSchema = {
   url: canonicalUrl.toString(),
   screenshot: `${siteUrl}/favicon.png`,
   softwareVersion: "2.0",
+  datePublished: publishDate,
+  dateModified: modifiedDate,
   author: {
     "@type": "Organization",
     name: siteName,
+    url: siteUrl,
   },
 };
 
-// Organization Schema for Bing Knowledge Panel
+// Organization Schema for Bing Knowledge Panel (enhanced with sameAs for entity disambiguation)
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: siteName,
-  alternateName: "YouTube to MP4 Converter",
+  alternateName: ["YouTube to MP4 Converter", "TubeToMP4 Converter", "yutubetomp4"],
   url: siteUrl,
-  logo: `${siteUrl}/favicon.png`,
-  description: "Free online YouTube to MP4 converter. Download YouTube videos in HD quality up to 4K resolution.",
+  logo: {
+    "@type": "ImageObject",
+    url: `${siteUrl}/favicon.png`,
+    width: 512,
+    height: 512,
+  },
+  description: "Free online YouTube to MP4 converter. Download YouTube videos in HD quality up to 4K resolution. No registration required.",
   foundingDate: "2024",
   sameAs: [
     "https://twitter.com/tubetomp4",
     "https://www.facebook.com/tubetomp4",
+    "https://github.com/shaheertiger/yutubetomp4.online",
   ],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",
     availableLanguage: ["English", "Spanish", "German", "French", "Portuguese", "Japanese", "Korean", "Arabic"],
   },
+  knowsAbout: [
+    "YouTube video downloading",
+    "MP4 video conversion",
+    "MP3 audio extraction",
+    "Video format conversion",
+    "4K video download",
+  ],
 };
 
 // WebSite Schema for Bing Sitelinks Search Box
@@ -102,6 +127,7 @@ const websiteSchema = {
   name: siteName,
   alternateName: "TubeToMP4 - YouTube Video Downloader",
   url: siteUrl,
+  dateModified: modifiedDate,
   potentialAction: {
     "@type": "SearchAction",
     target: {
@@ -111,6 +137,57 @@ const websiteSchema = {
     "query-input": "required name=search_term_string",
   },
   inLanguage: currentLang,
+  publisher: {
+    "@type": "Organization",
+    name: siteName,
+    url: siteUrl,
+  },
+};
+
+// Speakable Schema for Voice Search & AI Answer Engines (Bing Copilot, ChatGPT, Alexa)
+const speakableSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  url: canonicalUrl.toString(),
+  description: description,
+  datePublished: publishDate,
+  dateModified: modifiedDate,
+  inLanguage: currentLang,
+  isPartOf: {
+    "@type": "WebSite",
+    name: siteName,
+    url: siteUrl,
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", ".speakable-answer", "[data-speakable]"],
+  },
+  mainEntity: {
+    "@type": "SoftwareApplication",
+    name: siteName,
+    applicationCategory: "MultimediaApplication",
+    url: siteUrl,
+  },
+  about: {
+    "@type": "Thing",
+    name: "YouTube to MP4 Converter",
+    description: "A free online tool that converts YouTube videos to MP4 format for offline viewing.",
+  },
+  author: {
+    "@type": "Organization",
+    name: siteName,
+    url: siteUrl,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: siteName,
+    url: siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: `${siteUrl}/favicon.png`,
+    },
+  },
 };
 
 // BreadcrumbList Schema for Bing Navigation
@@ -159,6 +236,15 @@ const breadcrumbSchema = generateBreadcrumbs();
 <meta name="msapplication-tooltip" content="Convert YouTube videos to MP4 for free" />
 <meta name="msapplication-starturl" content="/" />
 
+<!-- Content Freshness Signals for Bing (Bing values fresh content) -->
+<meta name="date" content={modifiedDate} />
+<meta name="revised" content={modifiedDate} />
+<meta name="last-modified" content={modifiedDate} />
+
+<!-- Author Attribution (Bing ranking factor) -->
+<meta name="author" content={siteName} />
+<link rel="author" href={siteUrl} />
+
 <!-- Geo & Language Targeting for Bing -->
 <meta name="geo.region" content="US" />
 <meta name="geo.placename" content="United States" />
@@ -182,7 +268,7 @@ const breadcrumbSchema = generateBreadcrumbs();
   href={`${siteUrl}${slug === "/" ? "" : slug}`}
 />
 
-<!-- Open Graph / Facebook / Bing -->
+<!-- Open Graph / Facebook / Bing (Social Signals = Bing Ranking Factor) -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:title" content={title} />
@@ -193,8 +279,16 @@ const breadcrumbSchema = generateBreadcrumbs();
 <meta property="og:image:alt" content={`${siteName} - YouTube to MP4 Converter`} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content={currentLang === 'en' ? 'en_US' : `${currentLang}_${currentLang.toUpperCase()}`} />
+<meta property="og:updated_time" content={modifiedDate} />
+<meta property="article:published_time" content={publishDate} />
+<meta property="article:modified_time" content={modifiedDate} />
+<meta property="article:author" content={siteName} />
+<meta property="article:section" content="Technology" />
+<meta property="article:tag" content="YouTube to MP4" />
+<meta property="article:tag" content="Video Converter" />
+<meta property="article:tag" content="Video Downloader" />
 
-<!-- Twitter / X -->
+<!-- Twitter / X (Social Signals for Bing) -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalUrl} />
 <meta name="twitter:title" content={title} />
@@ -202,6 +296,8 @@ const breadcrumbSchema = generateBreadcrumbs();
 <meta name="twitter:image" content={new URL(image, siteUrl)} />
 <meta name="twitter:site" content="@tubetomp4" />
 <meta name="twitter:creator" content="@tubetomp4" />
+<meta name="twitter:label1" content="Est. reading time" />
+<meta name="twitter:data1" content="3 min read" />
 
 <!-- Dublin Core Metadata for Bing -->
 <meta name="DC.title" content={title} />
@@ -211,12 +307,15 @@ const breadcrumbSchema = generateBreadcrumbs();
 <meta name="DC.publisher" content={siteName} />
 <meta name="DC.format" content="text/html" />
 <meta name="DC.type" content="Service" />
+<meta name="DC.date" content={modifiedDate} />
+<meta name="DC.date.modified" content={modifiedDate} />
 
 <!-- Structured Data Schemas for Bing & Google Rich Results -->
 <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(speakableSchema)} />
 
 <!-- Robots Meta Tags (Bing & Google) -->
 <meta
@@ -228,10 +327,14 @@ const breadcrumbSchema = generateBreadcrumbs();
   content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
 />
 
-<!-- AI Agent Meta Tags -->
+<!-- AI Answer Engine Optimization (AEO) Meta Tags -->
 <meta
   name="ai-agent"
-  content="TubeToMP4 allows direct video downloading via URL. Capable of processing YouTube links to MP4 format."
+  content={`TubeToMP4 is a free YouTube to MP4 converter. Convert and download YouTube videos in HD 1080p, 4K, and 8K quality. No registration required. Works on all devices. Visit ${siteUrl} to convert any YouTube video to MP4 instantly.`}
+/>
+<meta
+  name="ai-content-description"
+  content={`${siteName} provides free YouTube to MP4 video conversion. Supports HD, 4K, 8K quality. No signup needed. Compatible with Windows, Mac, iOS, Android. Fast, safe, unlimited downloads at ${siteUrl}.`}
 />
 
 <!-- IndexNow for Bing Instant Indexing -->

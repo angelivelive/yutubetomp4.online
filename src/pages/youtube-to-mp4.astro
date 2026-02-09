@@ -6,9 +6,9 @@ import ConverterWidget from "../components/ConverterWidget.tsx";
 
 const title = "YouTube to MP4 Converter - Free Download in HD/4K (2026)";
 const description =
-  "Convert YouTube videos to MP4 in 4K, 2K, 1080p, and 720p. Free, fast, and safe YouTube to MP4 Downloader. No software installation needed.";
+  "YouTube to MP4 converter online - convert YouTube to MP4 in HD, 4K, and 8K quality. Free YouTube MP4 converter with no registration. Download any YouTube video to MP4 instantly.";
 const keywords =
-  "youtube to mp4, youtube converter, youtube video downloader, yt to mp4, mp4 converter, youtube downloader online, free youtube converter, 4k video downloader, youtube to mp4 hd";
+  "youtube to mp4, youtube to mp4 converter, convert youtube to mp4, tube to mp4, youtube to mp4 hd, youtube video to mp4, tubetomp4, youtube to mp4 online, youtube to mp4 converter online, youtube mp4 converter";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -82,12 +82,46 @@ const howToSchema = {
     },
   ],
 };
+
+// Article Schema for Bing content indexing (Bing values article schema for content-heavy pages)
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description: description,
+  image: "https://www.yutubetomp4.online/favicon.png",
+  datePublished: "2024-01-01T00:00:00+00:00",
+  dateModified: new Date().toISOString(),
+  author: {
+    "@type": "Organization",
+    name: "TubeToMP4",
+    url: "https://www.yutubetomp4.online",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "TubeToMP4",
+    url: "https://www.yutubetomp4.online",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.yutubetomp4.online/favicon.png",
+    },
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": "https://www.yutubetomp4.online/youtube-to-mp4",
+  },
+  keywords: keywords,
+  articleSection: "Technology",
+  wordCount: 3500,
+  inLanguage: "en",
+};
 ---
 
 <Layout title={title} description={description} keywords={keywords}>
   {/* JSON-LD Structured Data */}
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <Header />
 
@@ -95,10 +129,10 @@ const howToSchema = {
     <!-- Hero Section -->
     <div class="max-w-4xl mx-auto text-center mb-12">
       <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-6">
-        YouTube to <span class="text-brand-red">MP4</span>
+        YouTube to MP4 <span class="text-brand-red">Converter</span>
       </h1>
-      <p class="text-xl text-white/60 mb-8">
-        Convert and Download YouTube videos to MP4 Free in HD
+      <p class="speakable-answer text-xl text-white/60 mb-8" data-speakable="true">
+        Convert YouTube to MP4 online for free. This YouTube to MP4 HD converter lets you download any YouTube video to MP4 in 1080p, 4K, and 8K. No registration, no software. TubeToMP4 works on all devices.
       </p>
       <div class="flex justify-center w-full">
         <ConverterWidget client:load />
@@ -108,20 +142,14 @@ const howToSchema = {
     <!-- Intro Section -->
     <div class="max-w-4xl mx-auto text-center mb-16">
       <h2 class="text-3xl font-bold text-white mb-6">
-        Free YouTube to MP4 Converter
+        Free YouTube to MP4 Converter Online
       </h2>
       <div class="space-y-4 text-white/70 leading-relaxed">
         <p>
-          Yt1s is a popular YouTube to MP4 Converter. Using this Free YouTube
-          Downloader allows you to easily download and save YouTube videos in
-          high quality.
+          TubeToMP4 is the best YouTube to MP4 converter online. Use this free YouTube MP4 converter to convert YouTube to MP4 and download any YouTube video to MP4 in high quality. Our Tube to MP4 tool works directly in your browser.
         </p>
         <p>
-          Just follow the simple process: insert the URL into the search box,
-          and select the quality. You can download YouTube MP4 videos and save
-          them in different qualities such as 144p, 240p, 360p, 480p, 720p,
-          1080p, 1440p (2k), and up to 2160p (4k). Our YouTube Video Downloader
-          is totally safe and secure.
+          Simply paste a YouTube URL, select your quality, and download. You can save each YouTube video to MP4 in qualities from 360p, 720p, 1080p (YouTube to MP4 HD), 1440p (2K), and up to 2160p (4K). This YouTube to MP4 converter online is fast, safe, and completely free.
         </p>
       </div>
     </div>

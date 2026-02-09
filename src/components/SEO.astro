@@ -50,7 +50,8 @@ const modifiedDate = articleModified || now;
 const softwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: siteName,
+  name: `${siteName} - YouTube to MP4 Converter`,
+  alternateName: ["Tube to MP4", "YouTube MP4 Converter", "YouTube to MP4 Converter Online"],
   applicationCategory: "MultimediaApplication",
   operatingSystem: "Any",
   offers: {
@@ -91,7 +92,7 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: siteName,
-  alternateName: ["YouTube to MP4 Converter", "TubeToMP4 Converter", "yutubetomp4"],
+  alternateName: ["YouTube to MP4 Converter", "Tube to MP4", "TubeToMP4 Converter", "YouTube MP4 Converter", "yutubetomp4"],
   url: siteUrl,
   logo: {
     "@type": "ImageObject",
@@ -99,7 +100,7 @@ const organizationSchema = {
     width: 512,
     height: 512,
   },
-  description: "Free online YouTube to MP4 converter. Download YouTube videos in HD quality up to 4K resolution. No registration required.",
+  description: "Free YouTube to MP4 converter online. Convert YouTube to MP4 and download YouTube videos in HD quality up to 4K resolution. No registration required.",
   foundingDate: "2024",
   sameAs: [
     "https://twitter.com/tubetomp4",
